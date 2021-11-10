@@ -1,7 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-
+//has todos is global
+//user is global
 function App() {
   return (
     <div className="App">
