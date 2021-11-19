@@ -3,18 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "@types/jest": "^26.0.15",
-    "@types/node": "^12.0.0",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
+    "eslint-plugin-import": "^2.25.3",
     "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
-    "typescript": "^4.1.2",
+    "typescript": "4.1.6",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -27,7 +21,25 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "plugins": [
+      "import"
+    ],
+    "settings": {
+      "import/parsers": {
+        "@typescript-eslint/parser": [".ts", ".tsx"]
+      }
+    },
+    "rules": {
+      "import/no-internal-modules": [
+        "error",
+        {
+          "allow": [
+            "source-map-support/*"
+          ]
+        }
+      ]
+    }
   },
   "browserslist": {
     "production": [
@@ -42,6 +54,14 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.176"
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.15",
+    "@types/lodash": "^4.14.176",
+    "@types/node": "^12.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "eslint-import-resolver-typescript": "^2.5.0"
   }
 }

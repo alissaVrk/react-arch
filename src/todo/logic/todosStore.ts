@@ -1,4 +1,3 @@
-import { networkInterfaces } from "os";
 import { addDesc, addTodo, getTodosDescs, getUserTodos, TodoDB, TodoDescriptionDB, updateTodo } from "../../server/todos";
 
 export type Todo = {
@@ -10,7 +9,7 @@ export type Todo = {
 
 export type TodoAction = 
         {name: 'init', userId: string} | 
-        {name: 'add', todo: Todo} |
+        {name: 'add', todo: Omit<Todo, "id">} |
         {name: 'delete', todoId: string} |
         {name: "markAsDone", todoId: string};
 
@@ -30,41 +29,39 @@ function getTodo(todo: TodoDB, desc: TodoDescriptionDB): Todo {
 }
 export default class TodosStore {
     private userId: string | undefined;
-    private stateUI: TodosStateUI = defaultState;
+    private immutableData: TodosStateUI = defaultState;
     
-    constructor() {}
-
     async load(userId: string) {
         if (this.userId && userId !== this.userId) {
-            this.stateUI = defaultState;
+            this.immutableData = defaultState;
         }
         this.userId = userId;
         const todos = await getUserTodos(userId)
         const descIds = todos.map(t => t.descId);
         const descs = await getTodosDescs(descIds);
-        this.stateUI.todos = todos.map((t, index) => getTodo(t, descs[index]))
-        this.stateUI.loading = false;
+        this.immutableData.todos = todos.map((t, index) => getTodo(t, descs[index]))
+        this.immutableData.loading = false;
         return true;
     }
 
-    async add(todo: Todo) {
+    async add(todo: Omit<Todo, "id">) {
         if (!this.userId) {
             throw new Error("");
         }
-        this.stateUI = {...this.stateUI, loading:true};
+        this.immutableData = {...this.immutableData, loading:true};
         const desc = await addDesc({description: todo.description});
         const newTodo = await addTodo({...todo, userId: this.userId, descId: desc.id});
-        this.stateUI = {...this.stateUI, todos: [...this.stateUI.todos, getTodo(newTodo, desc)], loading: false}
+        this.immutableData = {...this.immutableData, todos: [...this.immutableData.todos, getTodo(newTodo, desc)], loading: false}
         return true;
     }
 
     async markAsDone(todoId: string) {
-        this.stateUI = {...this.stateUI, loading:true};
+        this.immutableData = {...this.immutableData, loading:true};
         updateTodo({id: todoId, isDone: true});
-        const todoIndex = this.stateUI.todos.findIndex(t => t.id === todoId);
-        const newTodos = [...this.stateUI.todos];
+        const todoIndex = this.immutableData.todos.findIndex(t => t.id === todoId);
+        const newTodos = [...this.immutableData.todos];
         newTodos[todoIndex] = {...newTodos[todoIndex], isDone: true};
-        this.stateUI = {...this.stateUI, todos: newTodos, loading: false}
+        this.immutableData = {...this.immutableData, todos: newTodos, loading: false}
         return true;
     }
 
@@ -85,7 +82,7 @@ export default class TodosStore {
         return hasChanged;
     }
 
-    get defaultStateUI() {
-        return defaultStatus;
+    get state() {
+        return this.immutableData;
     }
 }
