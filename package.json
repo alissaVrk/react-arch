@@ -21,25 +21,7 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ],
-    "plugins": [
-      "import"
-    ],
-    "settings": {
-      "import/parsers": {
-        "@typescript-eslint/parser": [".ts", ".tsx"]
-      }
-    },
-    "rules": {
-      "import/no-internal-modules": [
-        "error",
-        {
-          "allow": [
-            "source-map-support/*"
-          ]
-        }
-      ]
-    }
+    ]
   },
   "browserslist": {
     "production": [

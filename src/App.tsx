@@ -1,6 +1,5 @@
 import './App.css';
-import Todos from './todo/ui/Todos';
-import TodosMultiple from './todo/ui/TodosMultiple';
+import {Todos, TodosMultiple} from '@todo';
 //has todos is global
 //user is global
 function App() {
