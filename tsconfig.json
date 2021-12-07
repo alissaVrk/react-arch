@@ -19,10 +19,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": {
-      "@todo":["src/todo"]
-    }
+    "baseUrl": "."
   },
   "include": [
     "src"

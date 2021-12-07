@@ -1,15 +1,11 @@
 import './App.css';
-import {Todos, TodosMultiple} from '@todo';
-//has todos is global
-//user is global
+import { ContextParent } from './todo/stateUpdate/context';
+import { StateParent } from './todo/stateUpdate/state';
 function App() {
   return (
     <div className="App">
-     <Todos />
-     <TodosMultiple />
-     <TodosMultiple />
-     {/* <StateParent /> */}
-     {/* <ContextParent /> */}
+     <StateParent />
+     <ContextParent />
     </div>
   );
 }

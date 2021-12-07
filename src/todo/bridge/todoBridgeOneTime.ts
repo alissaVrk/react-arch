@@ -1,8 +1,7 @@
 //this is a one time bridge
 //you cannot render the same component twice
 import { useCallback, useState } from "react";
-import TodosStore from "../logic/todosStore";
-import {TodoAction, TodosStateUI} from "@todo"
+import TodosStore, { TodoAction, TodosStateUI } from "../logic/todosStore";
 
 function createTodosBridge(store: TodosStore) {
     function useTodoStore(): [TodosStateUI, (action: TodoAction) => Promise<void>] {

@@ -6,11 +6,10 @@ const val = {a: 1, b:2, changeA: () => {}}
 const ccc = React.createContext(val);
 
 function ParentC() {
-
     console.log("render parent")
     return (<div>
+        <h3>Parent with context</h3>
         <ProviderCC con={ccc}>
-            Parent
             <ChildA label="A" con={ccc} />
             <ChildB label="B" con={ccc}/>
             <SomeComp />
@@ -33,26 +32,32 @@ function ProviderCC({con, children}: {con: React.Context<StateType>, children: R
 
 function SomeComp() {
     const [state, setState] = useState(1)
-    console.log("render some")
-    return(<div>
-        hello {state}
-        <button onClick={() => setState(state + 1)}>do some</button>    
-        </div>)
+    console.log("render component no context")
+    return(
+        <div style={{margin: 15}}>
+            hello {state} <br/>
+            <button onClick={() => setState(state + 1)}>component not using context</button>    
+        </div>
+    )
 }
 function ChildA({con, label}: {con: React.Context<StateType>, label: string}) {
     console.log("render", label);
     const {a, changeA} = useContext(con)
-    return (<div>
-        this is me {a}
-        <button onClick={() => changeA() }> change a </button>
-        </div>)
+    return (
+        <div style={{margin: 15}}>
+            this is me {label} {a} <br />
+            <button onClick={() => changeA() }> change a </button>
+        </div>
+    )
 }
 function ChildB({con, label}: {con: React.Context<StateType>, label: string}) {
     console.log("render", label);
     const {b} = useContext(con)
-    return (<div>
-        this is me {b}
-        <SomeComp />
-        </div>)
+    return (
+        <div style={{margin: 15, border:"1px solid"}}>
+            this is me {label} {b}
+            <SomeComp />
+        </div>
+    )
 }
 export const ContextParent = ParentC
