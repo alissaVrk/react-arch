@@ -45,6 +45,8 @@ function SomeComp({label}: {label: string}) {
         </div>
     )
 }
+const SomeCompMemo = React.memo(SomeComp);
+
 function ChildA({con, label}: {con: React.Context<StateType>, label: string}) {
     console.log("render", label);
     const {a, changeA} = useContext(con)
@@ -55,6 +57,9 @@ function ChildA({con, label}: {con: React.Context<StateType>, label: string}) {
         </div>
     )
 }
+const ChildAMemo = React.memo(ChildA);
+
+
 function ChildB({con, label}: {con: React.Context<StateType>, label: string}) {
     console.log("render", label);
     const {b} = useContext(con)
@@ -65,4 +70,7 @@ function ChildB({con, label}: {con: React.Context<StateType>, label: string}) {
         </div>
     )
 }
+
+const ChildBMemo = React.memo(ChildB);
+
 export const ContextParent = ParentC

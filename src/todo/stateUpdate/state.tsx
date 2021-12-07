@@ -1,3 +1,4 @@
+import React from "react"
 import { useState } from "react"
 
 
@@ -21,11 +22,14 @@ function Child({data, label}: {data: number, label: string}) {
     console.log("render", label);
     return (<div style={{margin: 15}}>this is me {label} {data}</div>)
 }
+const ChildMemo = React.memo(Child);
 
 function SomeComp() {
     console.log("render without props")
     return(<div style={{margin: 15}}>this is comp without props</div>)
 }
+
+const SomeCompMemo = React.memo(SomeComp);
 
 export const StateParent = Parent
 
