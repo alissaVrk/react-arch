@@ -12,7 +12,7 @@ function ParentC() {
         <ProviderCC con={ccc}>
             <ChildA label="A" con={ccc} />
             <ChildB label="B" con={ccc}/>
-            <SomeComp />
+            <SomeComp label="Parent"/>
         </ProviderCC>
     </div>)
 }
@@ -27,16 +27,21 @@ function ProviderCC({con, children}: {con: React.Context<StateType>, children: R
             changeA: () => setState({...state, a: state.a + 1})
         }
     }, [state]);
-    return (<con.Provider value={vv}>{children} </con.Provider>)
+    return (
+        <div>
+            <SomeComp label="Provider" />
+            <con.Provider value={vv}>{children} </con.Provider>
+        </div>
+    )
 }
 
-function SomeComp() {
+function SomeComp({label}: {label: string}) {
     const [state, setState] = useState(1)
-    console.log("render component no context")
+    console.log("render component no context", label)
     return(
         <div style={{margin: 15}}>
-            hello {state} <br/>
-            <button onClick={() => setState(state + 1)}>component not using context</button>    
+            {label} component not using context {state} <br/>
+            <button onClick={() => setState(state + 1)}>change inner state</button>    
         </div>
     )
 }
@@ -56,7 +61,7 @@ function ChildB({con, label}: {con: React.Context<StateType>, label: string}) {
     return (
         <div style={{margin: 15, border:"1px solid"}}>
             this is me {label} {b}
-            <SomeComp />
+            <SomeComp label="B" />
         </div>
     )
 }
